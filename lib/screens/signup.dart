@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
@@ -56,7 +58,9 @@ class _SignUpState extends State<SignUp> {
 
   submit() async{
     setState(() { loading=true; });
-    await loginUser(username.text, password.text);
+    var res=await loginUser(username.text, password.text);
+    if (res=="success") {Navigator.pushReplacementNamed(context,"/home");}
+    else {snackbar(res, context);}
     setState(() { loading=false; });
   }
 

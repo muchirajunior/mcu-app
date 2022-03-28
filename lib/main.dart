@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mcuapp/screens/home.dart';
 import 'package:mcuapp/screens/launcher.dart';
@@ -19,6 +20,8 @@ class MyApp extends StatelessWidget {
       theme: CustomTheme.lightTheme,
       darkTheme: CustomTheme.darkTheme,
       themeMode: ThemeMode.light,
+
+      initialRoute: kIsWeb ? "/signup" :"/",
       routes: {
         '/':(context)=>const Launcher(),
         '/home':(context)=> const Home(),
