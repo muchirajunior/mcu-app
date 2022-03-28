@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-textInput(TextEditingController controller, var hint, bool pass, {int maxlines=1}){
+textInput(TextEditingController controller, var hint, bool pass, {int maxlines=1,String label=""}){
   return Container(
     margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
     decoration: BoxDecoration(
@@ -29,7 +29,7 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width*.95,
+      width: MediaQuery.of(context).size.width*.90,
       height: 40,
       child: ElevatedButton(
         onPressed: ()=> method(),
@@ -44,3 +44,4 @@ snackbar(String text, BuildContext context){
     SnackBar(content: Text(text))
   );
 }
+

@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mcuapp/screens/create.dart';
 import 'package:mcuapp/screens/home.dart';
 import 'package:mcuapp/screens/launcher.dart';
+import 'package:mcuapp/screens/project.dart';
 import 'package:mcuapp/screens/signup.dart';
 import 'package:mcuapp/utils/theme.dart';
 
@@ -25,7 +27,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/':(context)=>const Launcher(),
         '/home':(context)=> const Home(),
-        '/signup':(context) => const SignUp()
+        '/signup':(context) => const SignUp(),
+        '/create':(context) => const CreateProject(),
+        '/project':(context) => const ProjectPage()
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/services/services.dart';
 import 'package:mcuapp/utils/utils.dart';
 
@@ -14,7 +15,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("user.name!"),
+        title: Text("your projects"),
         actions: [
           IconButton(
             onPressed: (){}, 
@@ -27,7 +28,19 @@ class _HomeState extends State<Home> {
         builder: (context, snapshot){
           if (snapshot.hasData){
             if (snapshot.data!.isNotEmpty){
-              return ListView();
+              return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: ((context,index){
+                  Project project=snapshot.data![index];
+                  return Card(
+                    child: ListTile(
+                      title: Text(project.name.toString()),
+                      leading: const Icon(Icons.task),
+                      trailing: const Icon(Icons.forward),
+                    ),
+                  );
+                })
+                );
             }
             else{
               return  Center(
@@ -55,7 +68,7 @@ class _HomeState extends State<Home> {
         }),
       
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: ()=> Navigator.pushNamed(context, "/create"),
         child: const Icon(Icons.add),
       ),
 

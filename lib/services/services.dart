@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:async';
 import 'package:http/http.dart';
 import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/utils/utils.dart';
@@ -35,12 +35,11 @@ Stream<List> getProjects() async*{
   try{
     var res= await get(Uri.parse("$url/users/${user.id}/projects"), headers: headers);
     var response=jsonDecode(res.body);
-    var data=response.map((json)=>Project.fromJson(json));
-    data.forEach((item){
-      print(item.pins);
-    });
-    yield [];
+    var data=response.map((json)=>Project.fromJson(json)).toList() as List;
+    
+    yield data;
   }catch(e){
     print(e);
+    yield [];
   }
 }
