@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
+
 class User{
   String? id;
   String? name;
   String? username;
   String? token;
 
-  User({ this.id, this.name, this.username, this.token});
+  User({  this.id, this.name, this.username, this.token});
 
   User.fromJson(Map json):
       id=json['_id'],
@@ -48,4 +50,14 @@ class Pin{
      "value":value
    };
 
+}
+
+class NewPin{
+  String pin;
+  String value;
+  TextEditingController controller;
+  Function function;
+  bool read;
+
+  NewPin({required this.pin,required this.value,required this.controller,required this.function, required this.read});
 }

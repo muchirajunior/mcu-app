@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mcuapp/blocs/projects.dart';
+import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/services/services.dart';
 import 'package:mcuapp/utils/utils.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
   const Home({ Key? key }) : super(key: key);
@@ -15,23 +18,27 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("your projects"),
+        title: BlocBuilder<UserState, User>(
+          builder: (context,user) {
+            return Text(user.name.toString());
+          }
+        ),
         actions: [
           IconButton(
-            onPressed: (){}, 
+            onPressed: ()=>Navigator.pushNamed(context, "/settings"), 
             icon: const Icon(Icons.settings) )
         ],
       ),
       
-      body: StreamBuilder<List>(
-        stream: getProjects(),
+      body: BlocBuilder< ProjectState,List<Project>>(
+       
         builder: (context, snapshot){
-          if (snapshot.hasData){
-            if (snapshot.data!.isNotEmpty){
+          if (snapshot.isNotEmpty){
+           
               return ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: snapshot.length,
                 itemBuilder: ((context,index){
-                  Project project=snapshot.data![index];
+                  Project project=snapshot[index];
                   return Card(
                     child: ListTile(
                       title: Text(project.name.toString()),
@@ -41,7 +48,8 @@ class _HomeState extends State<Home> {
                   );
                 })
                 );
-            }
+          }
+            
             else{
               return  Center(
                 child: Column(
@@ -59,13 +67,7 @@ class _HomeState extends State<Home> {
               );
             }
           }
-        
-          else if (snapshot.hasError){
-            return const Center(child: Text("error loading data"));
-          }
-          else { return const Center(child: CircularProgressIndicator(),); }
-          
-        }),
+        ),
       
       floatingActionButton: FloatingActionButton(
         onPressed: ()=> Navigator.pushNamed(context, "/create"),

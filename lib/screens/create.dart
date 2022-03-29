@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/screens/components.dart';
 
 class CreateProject extends StatefulWidget {
@@ -27,6 +28,7 @@ class _CreateProjectState extends State<CreateProject> {
     
         children: <Widget>[
           textInput(name, "project name", false),
+          // PinInput(pin: NewPin(pin: "pin 0", value: "pin 0", controller: pin1, function: submit, read: true)), 
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: SubmitButton(method:submit,text: "submit", ),

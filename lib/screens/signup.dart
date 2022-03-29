@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
@@ -41,7 +39,7 @@ class _SignUpState extends State<SignUp> {
             duration: const Duration(seconds: 1),
             child: Container(
               margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              width: 200,
+              width: MediaQuery.of(context).size.width*0.5,
               height: 4,
               color: Theme.of(context).primaryColor,
             )
@@ -58,7 +56,7 @@ class _SignUpState extends State<SignUp> {
 
   submit() async{
     setState(() { loading=true; });
-    var res=await loginUser(username.text, password.text);
+    var res=await loginUser(context, username.text, password.text);
     if (res=="success") {Navigator.pushReplacementNamed(context,"/home");}
     else {snackbar(res, context);}
     setState(() { loading=false; });
@@ -74,23 +72,28 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-            const SizedBox(height: 20,),
-            SignUpTab(),
-            
-            !login ? textInput(name, "name", false): const Text(""),
-               textInput(username, "username", false),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              const SizedBox(height: 20,),
+              SignUpTab(),
+              
+              !login ? textInput(name, "name", false): const Text(""),
+
+              textInput(username, "username", false),
+
               textInput(password, "password", true),
-            !login ? textInput(confirmPassword, "confirm passord", true): const Text(""),
 
-            const SizedBox(height: 20,),
-            loading ? const CircularProgressIndicator() :  SubmitButton(method: submit,text: login ? "Login " :"Register",)
-
-          ],
+              !login ? textInput(confirmPassword, "confirm passord", true): const Text(""),
+        
+              const SizedBox(height: 20,),
+              loading ? const CircularProgressIndicator() :  SubmitButton(method: submit,text: login ? "Login " :"Register",)
+        
+            ],
+          ),
         ),
       ),
 

@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:mcuapp/models/models.dart';
 
 textInput(TextEditingController controller, var hint, bool pass, {int maxlines=1,String label=""}){
   return Container(
@@ -29,7 +28,7 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width*.90,
+      width: MediaQuery.of(context).size.width*.95,
       height: 40,
       child: ElevatedButton(
         onPressed: ()=> method(),
@@ -45,3 +44,18 @@ snackbar(String text, BuildContext context){
   );
 }
 
+class PinInput extends StatelessWidget {
+  late NewPin pin;
+  PinInput({ Key? key, required this.pin}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+     children: <Widget>[
+        Text(pin.pin),
+        textInput(pin.controller, pin.value, false),
+        
+     ],
+    );
+  }
+}

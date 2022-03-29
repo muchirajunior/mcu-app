@@ -1,8 +1,9 @@
 import 'package:mcuapp/models/models.dart';
 
+var userToken="";
 
 Map<String,String> headers={
-  "Authorization":"Bearer "+user.token!,
+  "Authorization":"Bearer "+userToken,
   "Content-Type":"application/json"
 };
 

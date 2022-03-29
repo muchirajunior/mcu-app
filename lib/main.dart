@@ -1,9 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcuapp/blocs/projects.dart';
+import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/screens/create.dart';
 import 'package:mcuapp/screens/home.dart';
 import 'package:mcuapp/screens/launcher.dart';
 import 'package:mcuapp/screens/project.dart';
+import 'package:mcuapp/screens/settings.dart';
 import 'package:mcuapp/screens/signup.dart';
 import 'package:mcuapp/utils/theme.dart';
 
@@ -17,20 +21,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: CustomTheme.lightTheme,
-      darkTheme: CustomTheme.darkTheme,
-      themeMode: ThemeMode.light,
-
-      initialRoute: kIsWeb ? "/signup" :"/",
-      routes: {
-        '/':(context)=>const Launcher(),
-        '/home':(context)=> const Home(),
-        '/signup':(context) => const SignUp(),
-        '/create':(context) => const CreateProject(),
-        '/project':(context) => const ProjectPage()
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<UserState>(create: (_)=>UserState()),
+        BlocProvider<ProjectState>(create:(_)=>ProjectState())
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: CustomTheme.lightTheme,
+        darkTheme: CustomTheme.darkTheme,
+        themeMode: ThemeMode.light,
+    
+        initialRoute: kIsWeb ? "/signup" :"/",
+        routes: {
+          '/':(context)=>const Launcher(),
+          '/home':(context)=> const Home(),
+          '/signup':(context) => const SignUp(),
+          '/create':(context) => const CreateProject(),
+          '/project':(context) => const ProjectPage(),
+          '/settings':(context) => const SettingsPage()
+        },
+      ),
     );
   }
 }
