@@ -17,11 +17,14 @@ class Launcher extends StatefulWidget {
 
 class _LauncherState extends State<Launcher> {
 
+  String uname="";
+
    launchApp(BuildContext context)async{
     SharedPreferences preferences= await SharedPreferences.getInstance();
     if (preferences.containsKey("name")){
       var id=preferences.getString("id");
       var name=preferences.getString("name");
+      setState(() { uname=name as String;});
       var username=preferences.getString("username");
       var token=preferences.getString("token");
       userToken=token as String;
@@ -46,6 +49,7 @@ class _LauncherState extends State<Launcher> {
   @override
   Widget build(BuildContext context) {
     launchApp(context);
+    var screen=MediaQuery.of(context).size;
     return Scaffold(
   
       body: Container(
@@ -56,15 +60,33 @@ class _LauncherState extends State<Launcher> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:  <Widget>[
-              const SizedBox(height: 100,),
-              const Text("MCU APP", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
-              const SizedBox(height: 200,),
-              Image.asset("welcome.svg"),
+              SizedBox(height: screen.height*.15,),
+              const Text("MCU APP", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
+              SizedBox(height: screen.height*.1,),
+              Image.asset("assets/welcome.png", height: screen.height*.3,),
               const Expanded(child: Text(""),),
-              SubmitButton(
-                method: ()=>Navigator.pushReplacementNamed(context, '/signup'),
-                text: "Get Started",),
-              const SizedBox(height: 100,),
+              Container(
+                height:screen.height*.3,
+                width: screen.width,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius:const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  )
+                ),  
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                    Text("welcome $uname ",style:const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold ),),
+                    const SizedBox(height: 10,),
+                    const Text("please wait as we load data",style: TextStyle(color: Colors.white),),
+                    const SizedBox(height: 20,),
+                    const CircularProgressIndicator( color: Colors.amber,)
+                  ],),
+                ),
+              ),
 
             ]
           ),

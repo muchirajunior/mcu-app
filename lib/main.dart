@@ -4,14 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/screens/create.dart';
-import 'package:mcuapp/screens/home.dart';
+import 'package:mcuapp/screens/home.dart';  
 import 'package:mcuapp/screens/launcher.dart';
 import 'package:mcuapp/screens/project.dart';
 import 'package:mcuapp/screens/settings.dart';
 import 'package:mcuapp/screens/signup.dart';
-import 'package:mcuapp/utils/theme.dart';
+import 'package:mcuapp/utils/theme.dart'; 
 
-void main() {
+  void main() {
   runApp(const MyApp());
 }
 
