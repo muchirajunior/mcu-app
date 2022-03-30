@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mcuapp/models/models.dart';
 
 textInput(TextEditingController controller, var hint, bool pass, {int maxlines=1,String label=""}){
   return Container(
-    margin: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+    margin: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.circular(10)),
@@ -44,18 +45,17 @@ snackbar(String text, BuildContext context){
   );
 }
 
-class PinInput extends StatelessWidget {
-  late NewPin pin;
-  PinInput({ Key? key, required this.pin}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-     children: <Widget>[
-        Text(pin.pin),
-        textInput(pin.controller, pin.value, false),
-        
-     ],
-    );
+ Widget RadioInputs(_type,changeType) {
+ 
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+          children:<Widget>[
+            const Padding(
+              padding:  EdgeInsets.fromLTRB(20, 5, 0, 5),
+              child: Text("Select Pin Naming"),),
+            RadioListTile(title: const Text("Default naming"), value: "defalut", groupValue: _type, onChanged: (value)=>changeType(value)),
+            RadioListTile(title: const Text("Custom naming"), value: "custom", groupValue: _type, onChanged: (value)=>changeType(value)),
+  
+          ]
+        );
   }
-}

@@ -28,11 +28,12 @@ class _LauncherState extends State<Launcher> {
       var user=User(id: id, name:name,username: username,token: token);
       context.read<UserState>().addUser(user);
       await context.read<ProjectState>().loadProjects(context);
+      Future.delayed( const Duration(seconds: 4));
       Navigator.pushReplacementNamed(context, '/home');
 
     }else{
       Future.delayed( const Duration(seconds: 4));
-      Navigator.pushNamed(context, '/signup');
+      Navigator.pushReplacementNamed(context, '/signup');
     }
   }
 
@@ -50,16 +51,15 @@ class _LauncherState extends State<Launcher> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration:  const BoxDecoration(image: DecorationImage(fit:BoxFit.cover, image: NetworkImage("https://i.pinimg.com/originals/e7/6f/52/e76f527dd0d43e418a4ddcf7778f7f14.png"))
-        ),
+       
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children:  <Widget>[
               const SizedBox(height: 100,),
-              const Text("MCU APP", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+              const Text("MCU APP", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),),
               const SizedBox(height: 200,),
-              const  CircularProgressIndicator(),
+              Image.asset("welcome.svg"),
               const Expanded(child: Text(""),),
               SubmitButton(
                 method: ()=>Navigator.pushReplacementNamed(context, '/signup'),

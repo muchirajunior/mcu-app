@@ -19,9 +19,8 @@ class Project{
   String? id;
   String? owner;
   String? name;
-  List<Pin>? pins=[];
 
-  Project({this.id,this.name,this.owner,this.pins});
+  Project({this.id,this.name,this.owner});
 
   Project.fromJson(Map json):
       id=json['_id'],

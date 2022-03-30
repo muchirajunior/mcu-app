@@ -9,4 +9,17 @@ Map<String,String> headers={
 
 const url="https://muchira-mcuapi.herokuapp.com";
 
-var user=User();
+
+generateData(List names){
+  var data=[];
+  for (int i=0;i<=8;i++){
+    data.add({
+      "pin":i,
+      "name":names.isNotEmpty ? names[i] : "Pin $i",
+      "value":i>4 ? 0: "on",
+      "type":i>4 ? "read" :"write"
+    });
+  }
+
+  return data;
+}

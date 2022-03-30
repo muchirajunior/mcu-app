@@ -22,6 +22,7 @@ Future loginUser(BuildContext context, var username,var password) async{
     var data=jsonDecode(response.body) as Map<String,dynamic>;
     if (response.statusCode==200){
       data['user']['token']=data['token'];
+      userToken=data['token'];
       
       if (kIsWeb){
        print("login via web initialized ...................");
@@ -40,7 +41,7 @@ Future loginUser(BuildContext context, var username,var password) async{
         var usr=User.fromJson(data['user']);
         context.read<UserState>().addUser(usr);
         await context.read<ProjectState>().loadProjects(context);
-        userToken=data['token'];
+   
       
       return "success";
     }
@@ -72,8 +73,42 @@ getUserProjects(BuildContext context) async{
 }
 
 logOut(BuildContext context) async{
+  if (kIsWeb){Navigator.pushReplacementNamed(context, '/signup');}
+  else{
   SharedPreferences preferences=await SharedPreferences.getInstance();
   preferences.clear();
   Navigator.pop(context);
   Navigator.pushReplacementNamed(context, '/signup');
+  }
 }
+
+createUserProject(var data,BuildContext context) async{
+  try {
+    var usr=context.read<UserState>().state;
+    var res = await post(
+      Uri.parse("$url/users/${usr.id}/projects"),
+      headers: headers,
+      body: jsonEncode(data) );
+    if(res.statusCode==200){
+      await context.read<ProjectState>().loadProjects(context);
+      return "success";
+    }else{ 
+      return jsonDecode(res.body)['msg'];
+     }
+  } catch (e) {
+    print(e.toString());
+    return e.toString();
+  }
+}
+
+getProjectPins(String uid,String pid)async{
+  try {
+    var res=await get(Uri.parse("$url/users/$uid/projects/$pid"), headers: headers);
+    var response=jsonDecode(res.body);
+    return response.map((json)=>Pin.fromJson(json)).toList();
+  } catch (e) {
+    print(e.toString());
+    return [];
+  }
+}
+
