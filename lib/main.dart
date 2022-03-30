@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             darkTheme: CustomTheme.darkTheme,
             themeMode: mode,
     
-            initialRoute: kIsWeb ? "/signup" :"/",
+            // initialRoute: "/",
             routes: {
               '/':(context)=>const Launcher(),
               '/home':(context)=> const Home(),

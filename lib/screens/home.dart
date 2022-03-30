@@ -65,7 +65,9 @@ class _HomeState extends State<Home> {
                     return Card(
                       child: ListTile(
                         title: Text(project.name.toString()),
-                        leading: const Icon(Icons.task),
+                        leading:  CircleAvatar(
+                          backgroundColor: Theme.of(context).primaryColor,
+                          child: const Icon(Icons.location_city)),
                         trailing:  IconButton(
                           onPressed: ()=>deleteDialog(context,()=>deleteproject(project.id)),
                           icon: const Icon(Icons.delete), ),

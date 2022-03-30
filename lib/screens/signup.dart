@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mcuapp/blocs/theme.dart';
 import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({ Key? key }) : super(key: key);
@@ -81,7 +82,7 @@ class _SignUpState extends State<SignUp> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height:screen.height*.1),
-              const Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              Text("Sign Up", style: TextStyle(fontSize: 20, color: context.read<ThemeState>().state == ThemeMode.dark ? Colors.white : Colors.grey, fontWeight: FontWeight.bold),),
               
               const SizedBox(height: 20,),
              Image.asset("assets/signup.png", height:screen.height*.25,),

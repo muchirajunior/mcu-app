@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcuapp/blocs/pins.dart';
 import 'package:mcuapp/models/models.dart';
@@ -29,6 +30,21 @@ class _ProjectPageState extends State<ProjectPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text(project.name.toString()),
+            toolbarHeight: 130,
+            bottom: PreferredSize(
+              child: ListTile(
+              title: const Text("project Id"),
+              subtitle: Text(project.id.toString()),
+              trailing: ElevatedButton(
+                onPressed: (){
+                  Clipboard.setData(ClipboardData(text: project.id.toString()));
+                  snackbar("copied id to clipboard", context);
+                },
+                child: const Text("copy id"),
+              ),
+            ),
+            preferredSize: const Size.fromHeight(4.0),
+            )
           ),
 
           body: ListView(

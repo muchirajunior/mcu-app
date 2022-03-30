@@ -27,8 +27,8 @@ class _LauncherState extends State<Launcher> {
        error=false;
      });
     SharedPreferences preferences= await SharedPreferences.getInstance();
-    if (preferences.containsKey("name")){
-      var theme=preferences.getString("theme");
+    if ( !kIsWeb && preferences.containsKey("name")){
+      var theme=preferences.getString("theme").toString();
       context.read<ThemeState>().setTheme( theme=="light" ? ThemeMode.light : theme=="dark" ? ThemeMode.dark : ThemeMode.system);
       var id=preferences.getString("id");
       var name=preferences.getString("name");
@@ -39,7 +39,7 @@ class _LauncherState extends State<Launcher> {
       var user=User(id: id, name:name,username: username,token: token);
       context.read<UserState>().addUser(user);
       var r=await context.read<ProjectState>().loadProjects(context);
-      if(r=="failedd"){ setState((){error=true;}); }
+      if(r=="failed"){ setState((){error=true;}); }
       else{
       Future.delayed( const Duration(seconds: 4));
       Navigator.pushReplacementNamed(context, '/home');
@@ -72,9 +72,9 @@ class _LauncherState extends State<Launcher> {
             mainAxisAlignment: MainAxisAlignment.center,
             children:  <Widget>[
               SizedBox(height: screen.height*.15,),
-              const Text("MCU APP", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
+              Text("MCU APP", style: TextStyle(fontSize: 25, color: context.read<ThemeState>().state == ThemeMode.dark ? Colors.white : Colors.grey, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
               SizedBox(height: screen.height*.1,),
-              kIsWeb ? const Text("") : Image.asset("assets/welcome.png", height: screen.height*.3,),
+              Image.asset("assets/welcome.png", height: screen.height*.3,),
               const Expanded(child: Text(""),),
               Container(
                 height:screen.height*.3,
