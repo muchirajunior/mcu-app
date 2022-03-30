@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
+import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,15 +69,18 @@ getUserProjects(BuildContext context) async{
     return data;
   }catch(e){
     print(e);
-    return [];
+    return "error";
   }
 }
 
 logOut(BuildContext context) async{
   if (kIsWeb){Navigator.pushReplacementNamed(context, '/signup');}
   else{
+  loadingDialog(context);
   SharedPreferences preferences=await SharedPreferences.getInstance();
   preferences.clear();
+  await Future.delayed(const Duration(seconds:3));
+  Navigator.pop(context);
   Navigator.pop(context);
   Navigator.pushReplacementNamed(context, '/signup');
   }
@@ -112,3 +116,15 @@ getProjectPins(String uid,String pid)async{
   }
 }
 
+
+
+deleteProject(String uid, String pid)async{
+  try {
+    var res = await delete(Uri.parse("$url/users/$uid/projects/$pid"), headers: headers);
+    if (res.statusCode==200){return "deleted project successfully";}
+    else {return "failed to delete project";}
+  } catch (e) {
+    print(e.toString());
+    return e.toString();
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -9,6 +10,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+ 
+  themeDialog(){
+    return showDialog(context: context, barrierDismissible: true, builder: (context){
+      return SetTheme();
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +37,12 @@ class _SettingsPageState extends State<SettingsPage> {
 
           const Divider(height: 2,),
 
-          const ListTile(
-          leading: Icon(Icons.brightness_auto),
-          title: Text("Color Theme"),
-          trailing: Icon(Icons.arrow_forward_ios_rounded),
-          tileColor: Colors.white,
+          ListTile(
+            leading:const Icon(Icons.brightness_auto),
+            title: const Text("Color Theme"),
+            trailing: const Icon(Icons.arrow_forward_ios_rounded),
+            tileColor: Colors.white,
+            onTap: ()=>themeDialog(),
           )
         ],
       ),

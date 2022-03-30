@@ -59,3 +59,66 @@ snackbar(String text, BuildContext context){
           ]
         );
   }
+
+loadingDialog(BuildContext context){
+  return showDialog(context: context, barrierDismissible: false, builder: (context){
+    return const AlertDialog(
+      backgroundColor: Colors.transparent,
+      title: Text("please wait...", style: TextStyle(color: Colors.white),),
+      content: SizedBox(
+        height: 100,
+        child: Center(child: CircularProgressIndicator())),
+    );
+  });
+}
+
+deleteDialog(BuildContext context, Function method){
+  return showDialog(context: context, barrierDismissible: true, builder: (context){
+    return  AlertDialog(
+      backgroundColor: Colors.white,
+      title:const Text("Warning"),
+      content: const Text("This action is not reversible !!"),
+      actions:[
+        IconButton(onPressed: (){ 
+            Navigator.pop(context);
+            method();}, 
+            icon: const Icon(Icons.delete), color: Colors.red,),
+        IconButton(onPressed: ()=> Navigator.pop(context), icon: const Icon(Icons.cancel)),
+      ]
+    );
+  });
+}
+
+
+
+class SetTheme extends StatefulWidget {
+  const SetTheme({ Key? key }) : super(key: key);
+
+  @override
+  _SetThemeState createState() => _SetThemeState();
+}
+
+class _SetThemeState extends State<SetTheme> {
+  var theme;
+  setTheme(val)=>setState((){theme=val;});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      title:const Text("select Theme"),
+      content:  SizedBox(
+        height: 200,
+        child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+            children:<Widget>[
+              RadioListTile(title: const Text("Light Theme"), value: "light", groupValue: theme, onChanged: (value)=>setTheme(value)),
+              RadioListTile(title: const Text("Dark Theme"), value: "dark", groupValue: theme, onChanged: (value)=>setTheme(value)),
+              RadioListTile(title: const Text("System Theme"), value: "system", groupValue: theme, onChanged: (value)=>setTheme(value)),
+  
+            ]
+          ),
+      )
+    );
+  }
+}

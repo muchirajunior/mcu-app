@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
@@ -69,6 +70,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    var screen =  MediaQuery.of(context).size;
     return Scaffold(
       
       body: Center(
@@ -77,8 +79,11 @@ class _SignUpState extends State<SignUp> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              SizedBox(height:screen.height*.1),
               const Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+              
               const SizedBox(height: 20,),
+              kIsWeb ? const Text("") : Image.asset("assets/signup.png", height:screen.height*.25,),
               SignUpTab(),
               
               !login ? textInput(name, "name", false): const Text(""),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
@@ -18,8 +19,12 @@ class Launcher extends StatefulWidget {
 class _LauncherState extends State<Launcher> {
 
   String uname="";
+  bool error=false;
 
    launchApp(BuildContext context)async{
+     setState(() {
+       error=false;
+     });
     SharedPreferences preferences= await SharedPreferences.getInstance();
     if (preferences.containsKey("name")){
       var id=preferences.getString("id");
@@ -30,9 +35,12 @@ class _LauncherState extends State<Launcher> {
       userToken=token as String;
       var user=User(id: id, name:name,username: username,token: token);
       context.read<UserState>().addUser(user);
-      await context.read<ProjectState>().loadProjects(context);
+      var r=await context.read<ProjectState>().loadProjects(context);
+      if(r=="failed"){ setState((){error=true;}); }
+      else{
       Future.delayed( const Duration(seconds: 4));
       Navigator.pushReplacementNamed(context, '/home');
+      }
 
     }else{
       Future.delayed( const Duration(seconds: 4));
@@ -48,7 +56,7 @@ class _LauncherState extends State<Launcher> {
 
   @override
   Widget build(BuildContext context) {
-    launchApp(context);
+    error ? "": launchApp(context);
     var screen=MediaQuery.of(context).size;
     return Scaffold(
   
@@ -63,7 +71,7 @@ class _LauncherState extends State<Launcher> {
               SizedBox(height: screen.height*.15,),
               const Text("MCU APP", style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic),),
               SizedBox(height: screen.height*.1,),
-              Image.asset("assets/welcome.png", height: screen.height*.3,),
+              kIsWeb ? const Text("") : Image.asset("assets/welcome.png", height: screen.height*.3,),
               const Expanded(child: Text(""),),
               Container(
                 height:screen.height*.3,
@@ -83,7 +91,7 @@ class _LauncherState extends State<Launcher> {
                     const SizedBox(height: 10,),
                     const Text("please wait as we load data",style: TextStyle(color: Colors.white),),
                     const SizedBox(height: 20,),
-                    const CircularProgressIndicator( color: Colors.amber,)
+                    error ? SubmitButton(method:()=>launchApp(context), text: "Network error, connect and reload", )  : const CircularProgressIndicator( color: Colors.amber,)
                   ],),
                 ),
               ),

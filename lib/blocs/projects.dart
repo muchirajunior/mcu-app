@@ -8,8 +8,10 @@ class ProjectState extends Cubit<List<Project>>{
   ProjectState () :super ([]);
 
    loadProjects(BuildContext context)async{
-     state.clear();
+    state.clear();
     var data= await getUserProjects(context);
+    if (data=="error"){return "failed";}
+    state.clear();
     data.forEach((item)=> state.add(item));
     emit([...state]);
   }
