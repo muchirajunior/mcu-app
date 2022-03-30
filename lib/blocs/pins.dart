@@ -1,20 +1,17 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcuapp/models/models.dart';
-import 'package:mcuapp/services/services.dart';
 
-class PinState extends Cubit<List<Pin>>{
-  PinState() :super ([]);
+class ProjectPinState extends Cubit<Project>{
+  ProjectPinState() :super (Project());
 
-  getPins(var uid, var pid)async*{
-    state.clear();
-    var data = await getProjectPins(uid, pid);
-    data.forEach((pin)=> state.add(pin) );
-    emit([...state]);
-  }
+  void setProject(Project project){
+    state.id=project.id;
+    state.name=project.name;
+    state.owner=project.owner;
+    state.pins=project.pins;
 
-  updatePins() async{
-    state.clear();
+    emit(state);
   }
   
 }

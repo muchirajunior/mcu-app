@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 
 class User{
@@ -19,20 +21,22 @@ class Project{
   String? id;
   String? owner;
   String? name;
+  List? pins;
 
-  Project({this.id,this.name,this.owner});
+  Project({this.id,this.name,this.owner,this.pins});
 
   Project.fromJson(Map json):
       id=json['_id'],
       owner=json['owner'],
-      name=json['name'];
+      name=json['name'],
+      pins=json['pins'].map((item)=>Pin.fromJson(item)).toList();
 }
 
 class Pin{
   int? pin;
   String? name;
-  bool? type;
-  var value;
+  String? type;
+  dynamic value;
 
   Pin({this.pin,this.name,this.type,this.value});
 

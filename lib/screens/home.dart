@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:mcuapp/blocs/pins.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
@@ -26,6 +27,8 @@ class _HomeState extends State<Home> {
     Navigator.pop(context);
     
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +68,11 @@ class _HomeState extends State<Home> {
                         leading: const Icon(Icons.task),
                         trailing:  IconButton(
                           onPressed: ()=>deleteDialog(context,()=>deleteproject(project.id)),
-                          icon: const Icon(Icons.delete),
-                        ),
+                          icon: const Icon(Icons.delete), ),
+                          onTap: (){
+                            context.read<ProjectPinState>().setProject(project);
+                            Navigator.pushNamed(context, "/project");                          
+                          },
                       ),
                     );
                   })

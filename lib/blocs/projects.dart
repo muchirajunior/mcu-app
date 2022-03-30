@@ -16,4 +16,10 @@ class ProjectState extends Cubit<List<Project>>{
     emit([...state]);
   }
 
+  updateProject(Project project){
+    var p=state.firstWhere((proj)=> proj.id==project.id);
+    p=project;
+    emit(state);
+  }
+
 }

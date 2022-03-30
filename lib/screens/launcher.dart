@@ -36,7 +36,7 @@ class _LauncherState extends State<Launcher> {
       var user=User(id: id, name:name,username: username,token: token);
       context.read<UserState>().addUser(user);
       var r=await context.read<ProjectState>().loadProjects(context);
-      if(r=="failed"){ setState((){error=true;}); }
+      if(r=="failedd"){ setState((){error=true;}); }
       else{
       Future.delayed( const Duration(seconds: 4));
       Navigator.pushReplacementNamed(context, '/home');

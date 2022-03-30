@@ -1,5 +1,4 @@
-import 'package:mcuapp/models/models.dart';
-
+//app utils
 var userToken="";
 
 Map<String,String> headers={
@@ -7,8 +6,10 @@ Map<String,String> headers={
   "Content-Type":"application/json"
 };
 
+
 const url="https://muchira-mcuapi.herokuapp.com";
 
+const String apiKey="fbudue730fbsjk78bnwo";
 
 generateData(List names){
   var data=[];

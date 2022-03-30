@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:mcuapp/blocs/pins.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
@@ -125,6 +126,33 @@ deleteProject(String uid, String pid)async{
     else {return "failed to delete project";}
   } catch (e) {
     print(e.toString());
+    return e.toString();
+  }
+}
+
+updatePin(int pin, var value, var owner, var pid, BuildContext context)async{
+  try {
+    var input=jsonEncode({
+      "pin":pin,
+      "value": value });
+
+    var res= await patch(
+      Uri.parse("$url/users/$owner/projects/$pid"),
+      headers: headers,
+      body: input);
+    var data=jsonDecode(res.body);
+   
+    if (res.statusCode==200){
+      var project=Project.fromJson(data['project']);
+
+      context.read<ProjectPinState>().setProject(project);
+      context.read<ProjectState>().updateProject(project);
+
+      return "successfully updated pin";
+    }
+    else{ return data['msg']; }
+
+  } catch (e) {
     return e.toString();
   }
 }

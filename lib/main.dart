@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcuapp/blocs/pins.dart';
 import 'package:mcuapp/blocs/projects.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/screens/create.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<UserState>(create: (_)=>UserState()),
-        BlocProvider<ProjectState>(create:(_)=>ProjectState())
+        BlocProvider<ProjectState>(create:(_)=>ProjectState()),
+        BlocProvider<ProjectPinState>(create: (_)=>ProjectPinState()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
