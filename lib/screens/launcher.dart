@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mcuapp/blocs/projects.dart';
+import 'package:mcuapp/blocs/theme.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/screens/components.dart';
@@ -27,6 +28,8 @@ class _LauncherState extends State<Launcher> {
      });
     SharedPreferences preferences= await SharedPreferences.getInstance();
     if (preferences.containsKey("name")){
+      var theme=preferences.getString("theme");
+      context.read<ThemeState>().setTheme( theme=="light" ? ThemeMode.light : theme=="dark" ? ThemeMode.dark : ThemeMode.system);
       var id=preferences.getString("id");
       var name=preferences.getString("name");
       setState(() { uname=name as String;});

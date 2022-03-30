@@ -31,7 +31,6 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: const Icon(Icons.person_remove),
             title: const Text("LogOut"),
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
-            tileColor: Colors.white,
             onTap: ()=>logOut(context),
           ),
 
@@ -41,7 +40,6 @@ class _SettingsPageState extends State<SettingsPage> {
             leading:const Icon(Icons.brightness_auto),
             title: const Text("Color Theme"),
             trailing: const Icon(Icons.arrow_forward_ios_rounded),
-            tileColor: Colors.white,
             onTap: ()=>themeDialog(),
           )
         ],

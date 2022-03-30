@@ -57,7 +57,8 @@ class _SignUpState extends State<SignUp> {
 
   submit() async{
     setState(() { loading=true; });
-    var res=await loginUser(context, username.text, password.text);
+    
+    var res= login ? await loginUser(context, username.text, password.text) : await registerUser(name.text, username.text, password.text, confirmPassword.text, context) ;
     if (res=="success") {Navigator.pushReplacementNamed(context,"/home");}
     else {snackbar(res, context);}
     setState(() { loading=false; });

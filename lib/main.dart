@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcuapp/blocs/pins.dart';
 import 'package:mcuapp/blocs/projects.dart';
+import 'package:mcuapp/blocs/theme.dart';
 import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/screens/create.dart';
 import 'package:mcuapp/screens/home.dart';  
@@ -27,22 +28,27 @@ class MyApp extends StatelessWidget {
         BlocProvider<UserState>(create: (_)=>UserState()),
         BlocProvider<ProjectState>(create:(_)=>ProjectState()),
         BlocProvider<ProjectPinState>(create: (_)=>ProjectPinState()),
+        BlocProvider<ThemeState>(create: (_)=>ThemeState()),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: CustomTheme.lightTheme,
-        darkTheme: CustomTheme.darkTheme,
-        themeMode: ThemeMode.light,
+      child: BlocBuilder<ThemeState, ThemeMode>(
+        builder: (context,mode) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            theme: CustomTheme.lightTheme,
+            darkTheme: CustomTheme.darkTheme,
+            themeMode: mode,
     
-        initialRoute: kIsWeb ? "/signup" :"/",
-        routes: {
-          '/':(context)=>const Launcher(),
-          '/home':(context)=> const Home(),
-          '/signup':(context) => const SignUp(),
-          '/create':(context) => const CreateProject(),
-          '/project':(context) => const ProjectPage(),
-          '/settings':(context) => const SettingsPage()
-        },
+            initialRoute: kIsWeb ? "/signup" :"/",
+            routes: {
+              '/':(context)=>const Launcher(),
+              '/home':(context)=> const Home(),
+              '/signup':(context) => const SignUp(),
+              '/create':(context) => const CreateProject(),
+              '/project':(context) => const ProjectPage(),
+              '/settings':(context) => const SettingsPage()
+            },
+          );
+        }
       ),
     );
   }

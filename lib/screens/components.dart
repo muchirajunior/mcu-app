@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mcuapp/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mcuapp/blocs/theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 textInput(TextEditingController controller, var hint, bool pass, {int maxlines=1,String label=""}){
   return Container(
@@ -75,7 +76,6 @@ loadingDialog(BuildContext context){
 deleteDialog(BuildContext context, Function method){
   return showDialog(context: context, barrierDismissible: true, builder: (context){
     return  AlertDialog(
-      backgroundColor: Colors.white,
       title:const Text("Warning"),
       content: const Text("This action is not reversible !!"),
       actions:[
@@ -83,7 +83,7 @@ deleteDialog(BuildContext context, Function method){
             Navigator.pop(context);
             method();}, 
             icon: const Icon(Icons.delete), color: Colors.red,),
-        IconButton(onPressed: ()=> Navigator.pop(context), icon: const Icon(Icons.cancel)),
+        IconButton(onPressed: ()=> Navigator.pop(context), icon: const Icon(Icons.cancel), color: Colors.amber,),
       ]
     );
   });
@@ -100,12 +100,19 @@ class SetTheme extends StatefulWidget {
 
 class _SetThemeState extends State<SetTheme> {
   var theme;
-  setTheme(val)=>setState((){theme=val;});
+  
+  setTheme(val) async{
+    setState((){theme=val;});
+    SharedPreferences preferences= await SharedPreferences.getInstance();
+    preferences.setString("theme", val);
+    
+    context.read<ThemeState>().setTheme( theme=="light" ? ThemeMode.light : theme=="dark" ? ThemeMode.dark : ThemeMode.system);
+    Navigator.pop(context);
+    }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white,
       title:const Text("select Theme"),
       content:  SizedBox(
         height: 200,

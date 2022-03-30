@@ -156,3 +156,30 @@ updatePin(int pin, var value, var owner, var pid, BuildContext context)async{
     return e.toString();
   }
 }
+
+registerUser(var name, var username, var password, var confirmPassword, BuildContext context)async{
+  if (password != confirmPassword){
+    return "password does not match confirm password";
+  }
+  try{
+    var user=jsonEncode({
+      "name":name,
+      "username":username,
+      "password":password
+    });
+    var res= await post(Uri.parse("$url/users/"),
+    headers: {"Content-Type":"application/json"},
+      body:user);
+
+    print(jsonDecode(res.body));
+
+    if (res.statusCode==200){
+      var result= await loginUser(context, username, password);
+      return result;
+    } 
+    
+    return "failed to register";
+  }catch(e){
+    return e.toString();
+  }
+}
