@@ -171,8 +171,6 @@ registerUser(var name, var username, var password, var confirmPassword, BuildCon
     headers: {"Content-Type":"application/json"},
       body:user);
 
-    print(jsonDecode(res.body));
-
     if (res.statusCode==200){
       var result= await loginUser(context, username, password);
       return result;

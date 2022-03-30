@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mcuapp/blocs/theme.dart';
@@ -103,8 +104,10 @@ class _SetThemeState extends State<SetTheme> {
   
   setTheme(val) async{
     setState((){theme=val;});
-    SharedPreferences preferences= await SharedPreferences.getInstance();
-    preferences.setString("theme", val);
+    if (!kIsWeb){
+      SharedPreferences preferences= await SharedPreferences.getInstance();
+      preferences.setString("theme", val);
+    }
     
     context.read<ThemeState>().setTheme( theme=="light" ? ThemeMode.light : theme=="dark" ? ThemeMode.dark : ThemeMode.system);
     Navigator.pop(context);

@@ -84,7 +84,7 @@ class _SignUpState extends State<SignUp> {
               const Text("Sign Up", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
               
               const SizedBox(height: 20,),
-              kIsWeb ? const Text("") : Image.asset("assets/signup.png", height:screen.height*.25,),
+             Image.asset("assets/signup.png", height:screen.height*.25,),
               SignUpTab(),
               
               !login ? textInput(name, "name", false): const Text(""),
