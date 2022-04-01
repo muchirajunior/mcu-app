@@ -42,7 +42,7 @@ Future loginUser(BuildContext context, var username,var password) async{
 
         var usr=User.fromJson(data['user']);
         context.read<UserState>().addUser(usr);
-        await context.read<ProjectState>().loadProjects(context);
+        await getUserProjects(context);
    
       
       return "success";
@@ -66,7 +66,8 @@ getUserProjects(BuildContext context) async{
     var res= await get(Uri.parse("$url/users/${user.id}/projects"), headers: headers);
     var response=jsonDecode(res.body);
     var data=response.map((json)=>Project.fromJson(json)).toList() as List;
-    
+    context.read<ProjectState>().loadProjects(data);
+    // print(response);
     return data;
   }catch(e){
     print(e);
@@ -95,7 +96,7 @@ createUserProject(var data,BuildContext context) async{
       headers: headers,
       body: jsonEncode(data) );
     if(res.statusCode==200){
-      await context.read<ProjectState>().loadProjects(context);
+      await getUserProjects(context);
       return "success";
     }else{ 
       return jsonDecode(res.body)['msg'];
@@ -146,7 +147,7 @@ updatePin(int pin, var value, var owner, var pid, BuildContext context)async{
       var project=Project.fromJson(data['project']);
 
       context.read<ProjectPinState>().setProject(project);
-      context.read<ProjectState>().updateProject(project);
+      await getUserProjects(context);
 
       return "successfully updated pin";
     }

@@ -6,7 +6,6 @@ import 'package:mcuapp/blocs/user.dart';
 import 'package:mcuapp/models/models.dart';
 import 'package:mcuapp/screens/components.dart';
 import 'package:mcuapp/services/services.dart';
-import 'package:mcuapp/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Home extends StatefulWidget {
@@ -23,9 +22,16 @@ class _HomeState extends State<Home> {
     var usr=context.read<UserState>().state;
     var result= await deleteProject(usr.id as String, pid);
     snackbar(result, context);
-    await context.read<ProjectState>().loadProjects(context);
+    await getUserProjects(context);
     Navigator.pop(context);
     
+  }
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
   }
 
 
@@ -35,6 +41,7 @@ class _HomeState extends State<Home> {
     var screen = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: BlocBuilder<UserState, User>(
           builder: (context,user) {
             return Text(user.name.toString());
